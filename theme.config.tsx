@@ -1,18 +1,32 @@
-import React from 'react'
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import React from 'react';
+import { DocsThemeConfig } from 'nextra-theme-docs';
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: (
+    <>
+      <img src='https://avatars.githubusercontent.com/u/97126757?v=4' />
+      <span>Happyuniv Docs</span>
+      <style jsx>
+        {`
+          img {
+            margin-right: 10px;
+            width: 32px;
+            height: 32px;
+          }
+        `}
+      </style>
+    </>
+  ),
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/happyuniv/happyuniv-Docs',
   },
-  chat: {
-    link: 'https://discord.com',
-  },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  // chat: {
+  //   link: 'https://discord.com',
+  // },
+  docsRepositoryBase: 'https://github.com/happyuniv/happyuniv-Docs',
   footer: {
     text: 'Nextra Docs Template',
   },
-}
+};
 
-export default config
+export default config;
