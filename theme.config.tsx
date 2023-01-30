@@ -1,5 +1,5 @@
-import React from 'react';
-import { DocsThemeConfig } from 'nextra-theme-docs';
+import React from 'react'
+import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
   logo: (
@@ -24,9 +24,7 @@ const config: DocsThemeConfig = {
   //   link: 'https://discord.com',
   // },
   docsRepositoryBase: 'https://github.com/happyuniv/happyuniv-Docs',
-  footer: {
-    text: 'Nextra Docs Template',
-  },
-};
+  footer: { component: <></> },
+}
 
-export default config;
+export default config
