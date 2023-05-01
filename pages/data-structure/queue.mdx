@@ -1,0 +1,44 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+## Queue
+
+### 시간복잡도
+
+| 접근 | 탐색 | 삽입 | 삭제 |
+| ---- | ---- | ---- | ---- |
+| O(N) | O(N) | O(1) | O(1) |
+
+### 구현
+
+<Tabs items={['Queue.js']}>
+  <Tab>
+```js filename="Queue.js"
+import { LinkedList } from "./LinkedList";
+
+class Queue {
+  constructor() {
+    this.linkedList = new LinkedList();
+  }
+
+  enqueue(value) {
+    this.linkedList.append(value);
+  }
+
+  dequeue() {
+    const deletedHead = this.linkedList.deleteHead();
+    return deletedHead ? deletedHead.value : null;
+  }
+
+  isEmpty() {
+    return !this.linkedList.head;
+  }
+
+  top() {
+    return this.isEmpty() ? null : this.linkedList.head.value;
+  }
+}
+```
+  </Tab>
+</Tabs>
+
+
