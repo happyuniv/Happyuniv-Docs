@@ -1,0 +1,44 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+## Stack
+
+### 시간복잡도
+
+| 접근 | 탐색 | 삽입 | 삭제 |
+| ---- | ---- | ---- | ---- |
+| O(N) | O(N) | O(1) | O(1) |
+
+### 구현
+
+<Tabs items={['Stack.js']}>
+  <Tab>
+```js filename="Stack.js"
+import { LinkedList } from "./LinkedList";
+
+class Stack {
+  constructor() {
+    this.linkedList = new LinkedList();
+  }
+
+  push(value) {
+    this.linkedList.append(value);
+  }
+
+  pop() {
+    const deletedTail = this.linkedList.deleteTail();
+    return deletedTail ? deletedTail.value : null;
+  }
+
+  isEmpty() {
+    return !this.linkedList.head;
+  }
+
+  top() {
+    return this.isEmpty() ? null : this.linkedList.tail.value;
+  }
+}
+```
+  </Tab>
+</Tabs>
+
+
