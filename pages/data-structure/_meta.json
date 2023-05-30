@@ -3,7 +3,6 @@
   "queue": "Queue",
   "stack": "Stack",
   "hash-table": "Hash Table",
-  "heap": "Heap",
   "tree": "Tree",
   "graph": "Graph"
 }

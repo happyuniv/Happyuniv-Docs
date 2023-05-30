@@ -1,0 +1,82 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+## Hash Table
+
+### 시간복잡도
+
+| 접근 | 탐색 | 삽입 | 삭제 |
+| ---- | ---- | ---- | ---- |
+| O(N) | O(N) | O(N) | O(N) |
+
+### 구현
+
+<Tabs items={['HashTable.js']}>
+  <Tab>
+```js filename="HashTable.js"
+import { LinkedList } from "./LinkedList";
+
+class HashTable {
+  constructor(default_size = 32) {
+    this.brackets = Array(default_size)
+      .fill(null)
+      .map(() => new LinkedList());
+    this.keys = {};
+  }
+
+  hash(key) {
+    const seed = Array.from(key).reduce(
+      (acc, cur) => acc + cur.charCodeAt(0),
+      0
+    );
+
+    return seed % this.brackets.length;
+  }
+
+  get(key) {
+    const index = this.hash(key);
+    this.keys[key] = index;
+    const node = this.brackets[index].find({
+      callback: (cur) => cur.value.key === key
+    });
+
+    if (node) return node.value.value;
+    else return null;
+  }
+
+  set(key, value) {
+    const index = this.hash(key);
+    this.keys[key] = index;
+
+    const node = this.brackets[index].find({
+      callback: (cur) => cur.value.key === key
+    });
+
+    if (node) {
+      node.value.value = value;
+    } else {
+      this.brackets[index].append({ key, value });
+    }
+  }
+
+  has(key) {
+    return this.keys.hasOwnProperty(key);
+  }
+
+  getKeys() {
+    return Object.keys(this.keys);
+  }
+
+  getValues() {
+    const values = this.brackets.reduce((acc, cur) => {
+      const bracketValues = cur.toArray().map((node) => node.value.value);
+      return acc.concat(bracketValues);
+    }, []);
+
+    return values;
+  }
+}
+```
+  </Tab>
+</Tabs>
+
+
