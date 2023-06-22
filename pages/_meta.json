@@ -2,6 +2,7 @@
   "index": "Introduction",
   "data-structure": "Data Structure",
   "algorithm": "Algorithm",
+  "algorithm_problems": "Algorithm Problems",
   "other_docs": {
     "title": "Other Docs",
     "type": "menu",

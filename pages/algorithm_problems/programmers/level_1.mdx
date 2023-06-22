@@ -1,0 +1,184 @@
+# 프로그래머스 Lv.1
+
+Lv.1 문제 모아보기:
+https://school.programmers.co.kr/learn/challenges?order=recent&levels=1&page=1&languages=javascript
+
+## 달리기 경주
+
+https://school.programmers.co.kr/learn/courses/30/lessons/178871
+
+```js
+function solution(players, callings) {
+  var answer = []
+  answer = Array.from(players)
+
+  let temp_players = {}
+  for (let i = 0; i < players.length; i++) {
+    temp_players[players[i]] = i
+  }
+
+  for (let calling of callings) {
+    let num = temp_players[calling]
+    let temp = answer[num]
+    answer[num] = answer[num - 1]
+    answer[num - 1] = temp
+
+    temp_players[answer[num]] = num
+    temp_players[answer[num - 1]] = num - 1
+  }
+
+  return answer
+}
+```
+
+## 추억 점수
+
+https://school.programmers.co.kr/learn/courses/30/lessons/176963
+
+```js
+function solution(name, yearning, photo) {
+  var answer = []
+
+  let table = {}
+  for (let i = 0; i < name.length; i++) {
+    table[name[i]] = yearning[i]
+  }
+
+  for (let i = 0; i < photo.length; i++) {
+    let score = 0
+    for (let j = 0; j < photo[i].length; j++) {
+      if (!table[photo[i][j]]) continue
+      score += table[photo[i][j]]
+    }
+    answer.push(score)
+  }
+
+  return answer
+}
+```
+
+## 공원 산책
+
+https://school.programmers.co.kr/learn/courses/30/lessons/172928
+
+```js
+function solution(park, routes) {
+  var answer = []
+
+  let x, y
+
+  for (let i = 0; i < park.length; i++) {
+    for (let j = 0; j < park[i].length; j++) {
+      if (park[i][j] === 'S') {
+        x = i
+        y = j
+        break
+      }
+    }
+  }
+
+  for (let i = 0; i < routes.length; i++) {
+    const dir = routes[i][0]
+    const num = parseInt(routes[i][2])
+
+    if (dir === 'N') {
+      if (park[x - num]) {
+        let obstacle = false
+        for (let i = 1; i <= num; i++) {
+          if (park[x - i][y] === 'X') {
+            obstacle = true
+            break
+          }
+        }
+        if (obstacle) continue
+        else x -= num
+      } else continue
+    } else if (dir === 'S') {
+      if (park[x + num]) {
+        let obstacle = false
+        for (let i = 1; i <= num; i++) {
+          if (park[x + i][y] === 'X') {
+            obstacle = true
+            break
+          }
+        }
+        if (obstacle) continue
+        else x += num
+      } else continue
+    } else if (dir === 'W') {
+      if (park[x][y - num]) {
+        let obstacle = false
+        for (let i = 1; i <= num; i++) {
+          if (park[x][y - i] === 'X') {
+            obstacle = true
+            break
+          }
+        }
+        if (obstacle) continue
+        else y -= num
+      } else continue
+    } else if (dir === 'E') {
+      if (park[x][y + num]) {
+        let obstacle = false
+        for (let i = 1; i <= num; i++) {
+          if (park[x][y + i] === 'X') {
+            obstacle = true
+            break
+          }
+        }
+        if (obstacle) continue
+        else y += num
+      } else continue
+    }
+  }
+
+  answer.push(x, y)
+
+  return answer
+}
+```
+
+## 바탕화면 정리
+
+https://school.programmers.co.kr/learn/courses/30/lessons/161990
+
+```js
+function solution(wallpaper) {
+  var answer = []
+
+  let lux = (luy = 50)
+  let rdx = (rdy = 0)
+
+  for (let i = 0; i < wallpaper.length; i++) {
+    for (let j = 0; j < wallpaper[i].length; j++) {
+      if (wallpaper[i][j] === '#') {
+        if (lux > i) lux = i
+        if (luy > j) luy = j
+        if (i > rdx) rdx = i
+        if (j > rdy) rdy = j
+      }
+    }
+  }
+
+  answer.push(lux, luy, rdx + 1, rdy + 1)
+  return answer
+}
+```
+
+## 덧칠하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/161989
+
+```js
+function solution(n, m, section) {
+  var answer = 0
+
+  let temp = 0
+  for (let i = 0; i < section.length; i++) {
+    if (temp >= section[i]) continue
+    temp = section[i] + m - 1
+    answer++
+  }
+  return answer
+}
+```
