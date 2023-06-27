@@ -182,3 +182,181 @@ function solution(n, m, section) {
   return answer
 }
 ```
+
+## 대충 만든 자판
+
+https://school.programmers.co.kr/learn/courses/30/lessons/160586
+
+```js
+function solution(keymap, targets) {
+    var answer = [];
+    
+    for(let i=0;i<targets.length;i++) {
+        
+        let count = 0;
+        let found = true;
+        for(let j=0;j<targets[i].length;j++) {
+            let min=101;
+            
+            for(let k=0;k<keymap.length;k++) {
+                for(let l=0;l<keymap[k].length;l++) {  
+                    if(keymap[k][l] === targets[i][j]) {
+                        if(l < min) {
+                            min = l+1;          
+                            break;
+                        }
+                    }         
+                }
+            }
+            if(min === 101) {
+                found = false;
+                break;
+            }
+            else count+=min
+        }
+        
+        if(found) answer.push(count);
+        else answer.push(-1)
+    }
+    return answer;
+}
+```
+
+## 카드 뭉치
+
+https://school.programmers.co.kr/learn/courses/30/lessons/159994
+
+```js
+function solution(cards1, cards2, goal) {
+    var answer = 'Yes';
+
+    let card1_index = 0;
+    let card2_index = 0;
+    
+    for(let i=0; i<goal.length; i++) {
+        
+        if(cards1[card1_index] !== goal[i] && cards2[card2_index] !== goal[i]) {
+            return 'No';
+        }
+        
+        if(cards1[card1_index] === goal[i]) {
+            card1_index++;
+        }
+        if(cards2[card2_index] === goal[i]) {
+            card2_index++;
+        }
+    }
+    return answer;
+}
+```
+
+## 둘만의 암호
+
+https://school.programmers.co.kr/learn/courses/30/lessons/155652
+
+```js
+function solution(s, skip, index) {
+    var answer = '';
+    
+    let checkList = {}
+    
+    for(let i=0; i<skip.length;i++) {
+        checkList[skip[i]] = true
+    }
+    
+    for(let i=0; i<s.length;i++) {
+        
+        let charCode = s.charCodeAt(i);
+        for(let j=index;j>0;j--) {
+             
+            charCode+=1;
+            if(charCode === 123) charCode = 97 
+            if(checkList[String.fromCharCode(charCode)]) j++
+        }
+        
+        answer+= String.fromCharCode(charCode)
+    }
+    return answer;
+}
+```
+
+## 개인정보 수집 유효기간
+
+https://school.programmers.co.kr/learn/courses/30/lessons/150370
+
+```js
+function solution(today, terms, privacies) {
+    var answer = [];
+    
+    const todayArr = today.split('.');
+    const todayYear = parseInt(todayArr[0]);
+    const todayMonth = parseInt(todayArr[1]);
+    const todayDay = parseInt(todayArr[2]);
+        
+    const termsTable = {};
+    for(let i=0; i<terms.length; i++) {
+        const termsArr = terms[i].split(' ');
+        termsTable[termsArr[0]] = termsArr[1]; 
+    }
+    
+    for(let i=0; i< privacies.length; i++) {
+        const privaciesArr = privacies[i].split(' ');
+        const dateArr = privaciesArr[0].split('.');
+        
+        let expireYear = parseInt(dateArr[0]);
+        let expireMonth = parseInt(dateArr[1]);
+        let expireDay = parseInt(dateArr[2]);
+        
+        const passMonth = parseInt(termsTable[privaciesArr[1]] % 12);
+        const passYear = parseInt(termsTable[privaciesArr[1]] / 12);
+        expireMonth += passMonth;
+        expireYear += passYear;
+        
+        
+        if(expireMonth >12) {
+            expireYear+=1;
+            expireMonth-=12;
+        }
+        
+        expireDay -= 1;
+        if(expireDay === 0) {
+            expireDay = 28
+            expireMonth -= 1;
+            if(expireMonth === 0) {
+                expireMonth = 12;
+                expireYear -= 1;
+            }
+        }
+                
+        if(expireYear < todayYear) {
+            answer.push(i+1);
+        }
+        else if(expireYear === todayYear) {
+            if(expireMonth < todayMonth) {
+                answer.push(i+1);
+            }
+            else if(expireMonth === todayMonth) {
+                if(expireDay < todayDay) {
+                    answer.push(i+1);
+                }
+            }
+        }
+    }
+    return answer;
+}
+```
+
+## 크기가 작은 부분 문자열
+
+https://school.programmers.co.kr/learn/courses/30/lessons/147355
+
+```js
+function solution(t, p) {
+    var answer = 0;
+    
+    for(let i=0;i<=t.length-p.length;i++) {     
+        if(parseInt(t.substring(i,i+p.length)) <= parseInt(p)) answer++;
+    }
+    return answer;
+}
+```
