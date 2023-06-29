@@ -17,19 +17,19 @@ import { BinarySearchTreeNode } from "./BinarySearchTreeNode";
 
 class BinarySearchTree {
   constructor() {
-    this.node = new BinarySearchTreeNode(null)
+    this.node = new BinarySearchTreeNode(null);
   }
 
   insert(value) {
-    this.node.insert(value)
+    this.node.insert(value);
   }
 
   remove(value) {
-    this.node.remove(value)
+    this.node.remove(value);
   }
 
   contain(value) {
-    this.node.contain(value)
+    return this.node.contain(value);
   }
 }
 ````
@@ -38,108 +38,100 @@ class BinarySearchTree {
 ```js filename="BinarySearchTreeNode.js"
 class BinarySearchTreeNode {
   constructor(value) {
-    this.value = value
-    this.left = null
-    this.right = null
-    this.parent = null
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.parent = null;
   }
 
   insert(value) {
     if (!this.value) {
-      this.value = value
-      return
+      this.value = value;
+      return;
     }
 
     if (this.value > value) {
-      if (this.left) this.left.insert(value)
+      if (this.left) this.left.insert(value);
       else {
-        const newNode = new BinarySearchTreeNode(value)
-        this.left = newNode
-        this.left.parent = this
+        const newNode = new BinarySearchTreeNode(value);
+        this.left = newNode;
+        this.left.parent = this;
       }
     } else if (this.value < value) {
-      if (this.right) this.right.insert(value)
+      if (this.right) this.right.insert(value);
       else {
-        const newNode = new BinarySearchTreeNode(value)
-        this.right = newNode
-        this.right.parent = this
+        const newNode = new BinarySearchTreeNode(value);
+        this.right = newNode;
+        this.right.parent = this;
       }
     }
   }
 
   remove(value) {
-    const removeNode = this.find(value)
-    if (!removeNode) return
+    const removeNode = this.find(value);
+    if (!removeNode) return;
 
     if (removeNode.left && removeNode.right) {
-      if (removeNode.parent) {
-        const minNode = removeNode.right.findMinNode(value)
-        minNode.left = removeNode.left
-        removeNode.parent = minNode
-      } else {
-        const minNode = removeNode.right.findMinNode(value)
-        minNode.left = removeNode.left
-        removeNode.value = removeNode.right.value
-        removeNode.left = removeNode.right.left
-        if (removeNode.right.right) removeNode.right = removeNode.right.right
-      }
+      const minNode = removeNode.right.findMinNode();
+      minNode.left = removeNode.left;
+      removeNode.left.parent = minNode;
+
+      removeNode.value = removeNode.right.value;
+      removeNode.left = removeNode.right.left;
+      removeNode.right = removeNode.right.right;
     } else if (!removeNode.left && !removeNode.right) {
       if (removeNode.parent) {
         if (
           removeNode.parent.left &&
           removeNode.parent.left.value === removeNode.value
         )
-          removeNode.parent.left = null
+          removeNode.parent.left = null;
         else if (
           removeNode.parent.right &&
           removeNode.parent.right.value === removeNode.value
         )
-          removeNode.parent.right = null
-      } else removeNode.value = null
+          removeNode.parent.right = null;
+      } else removeNode.value = null;
     } else {
-      const childNode = removeNode.left || removeNode.right
+      const childNode = removeNode.left || removeNode.right;
       if (removeNode.parent) {
-        childNode.parent = removeNode.parent
+        childNode.parent = removeNode.parent;
         if (
           removeNode.parent.left &&
           removeNode.parent.left.value === removeNode.value
         ) {
-          removeNode.parent.left = childNode
+          removeNode.parent.left = childNode;
         } else if (
           removeNode.parent.right &&
           removeNode.parent.right.value === removeNode.value
         ) {
-          removeNode.parent.right = childNode
+          removeNode.parent.right = childNode;
         }
       } else {
-        childNode.parent = null
-        removeNode.value = childNode.value
-        removeNode.left = childNode.left
-        removeNode.right = childNode.right
+        removeNode.value = childNode.value;
+        removeNode.left = childNode.left;
+        removeNode.right = childNode.right;
       }
     }
   }
 
   find(value) {
-    if (this.value === value) return this
-    else if (this.value > value && this.left) this.left.find(value)
-    else if (this.value < value && this.right) this.right.find(value)
+    if (this.value === value) return this;
+    else if (this.value > value && this.left) return this.left.find(value);
+    else if (this.value < value && this.right) return this.right.find(value);
 
-    return null
+    return null;
   }
 
   contain(value) {
-    return !!this.find(value)
+    return !!this.find(value);
   }
 
-  findMinNode(value) {
-    if (this.value > value) {
-      if (this.left) this.left.findMinNode(value)
-      else return this
-    } else return this
+  findMinNode() {
+    if (this.left) return this.left.findMinNode();
+    else return this;
   }
 }
 ````
-
   </Tab>
 </Tabs>
