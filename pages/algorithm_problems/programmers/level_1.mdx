@@ -475,3 +475,120 @@ function solution(k, m, score) {
   return answer
 }
 ```
+
+## 푸트 파이트 대회
+
+https://school.programmers.co.kr/learn/courses/30/lessons/134240
+
+```js
+function solution(food) {
+    var answer = '';
+    
+    for(let i=1;i<food.length;i++) {
+        answer += `${i}`.repeat(food[i]/2);
+    }
+    answer += '0'
+    for(let i=answer.length-2;i>=0;i--) {
+        answer += answer[i];
+    }
+    
+    return answer;
+}
+```
+
+## *햄버거 만들기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/133502
+
+```js
+function solution(ingredient) {
+    var answer = 0;
+    
+    const stack = [];
+    
+    for(let i=0;i<ingredient.length;i++) {
+        stack.push(ingredient[i]);
+        if(stack.length >3 && stack.slice(stack.length-4,stack.length).join('') === '1231') {
+            answer++;
+            for(let j=0;j<4;j++) stack.pop();
+        }
+    }
+    
+    return answer;
+}
+```
+
+## *옹알이 (2)
+
+https://school.programmers.co.kr/learn/courses/30/lessons/133499
+
+```js
+function solution(babbling) {
+    var answer = 0;
+    
+    const table = ['aya','ye','woo','ma'];
+    
+    for(let i=0;i<babbling.length;i++) {
+        let repeat ='';
+        
+        while(babbling[i].length) {
+            let flag = 1;
+            for(let word of table) {
+                if(babbling[i].slice(0,word.length) === word && word !== repeat ) {
+                    flag = 0;
+                    repeat = word;
+                    babbling[i] = babbling[i].replace(babbling[i].slice(0,word.length),'')                    
+                }
+            }
+            if(flag) break;
+        }
+        
+        if(babbling[i].length === 0) answer++;
+    }
+    
+    return answer;
+}
+```
+
+## 콜라 문제
+
+https://school.programmers.co.kr/learn/courses/30/lessons/132267
+
+```js
+function solution(a, b, n) {
+    var answer = 0;
+    
+    while(Math.floor(n/a)) {
+        let rest = n % a;
+        answer += Math.floor(n/a) * b ;
+        n = Math.floor(n/a)*b + rest;
+    }
+    
+    return answer;
+}
+```
+
+## 삼총사
+
+https://school.programmers.co.kr/learn/courses/30/lessons/131705
+
+```js
+function solution(number) {
+    var answer = 0;
+    
+    const temp = {}
+    for(let i=0;i<number.length;i++) {
+        temp[-number[i]] = true;
+        
+        for(let j=i+1;j<number.length;j++) {
+            for(let k=j+1;k<number.length;k++) {
+                if(temp[number[j]+number[k]]) answer++;
+            }
+        }
+        
+        temp[-number[i]] = false;
+    }
+    
+    return answer;
+}
+```
