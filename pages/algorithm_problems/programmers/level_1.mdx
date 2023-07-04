@@ -592,3 +592,191 @@ function solution(number) {
     return answer;
 }
 ```
+
+## 숫자 짝꿍
+
+https://school.programmers.co.kr/learn/courses/30/lessons/131128
+
+```js
+function solution(X, Y) {
+    var answer = '';
+    
+    const table = {}
+    const Xtable = {}
+    const Ytable = {}
+    
+    for(let num of X) {
+        if(Xtable[num]) Xtable[num]++;
+        else Xtable[num] = 1;
+    }
+    for(let num of Y) {
+        if(Ytable[num]) Ytable[num]++;
+        else Ytable[num] = 1;
+    }
+    for(let num in Ytable) {
+        if(Xtable[num]) {
+            if(Xtable[num] <= Ytable[num]) table[num] = Xtable[num];
+            else table[num] = Ytable[num];
+        }
+    }
+
+    const keyArray = Object.keys(table); 
+    if(keyArray.length === 0) return '-1';
+    if(keyArray.length === 1 && keyArray[0] === '0') return '0';
+    
+    for(let num of keyArray.sort((a,b) => b-a)) {
+        for(let i=0;i<table[num];i++) {
+            answer += num;
+        }
+    }
+    
+    return answer;
+}
+```
+
+## 성격 유형 검사하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/118666
+
+```js
+function solution(survey, choices) {
+    var answer = '';
+    
+    const table = {
+        R:0,
+        T:0,
+        C:0,
+        F:0,
+        J:0,
+        M:0,
+        A:0,
+        N:0
+    }
+    
+    for(let i=0;i<survey.length;i++) {
+        const choice = choices[i];
+        if(choice === 1 || choice === 2 || choice === 3) {
+            const firstChar = survey[i][0];
+            
+            if(choice === 1) table[firstChar] += 3;
+            if(choice === 2) table[firstChar] += 2;
+            if(choice === 3) table[firstChar] += 1;
+        }
+        else if(choice === 5 || choice === 6 || choice === 7) {
+            const secondChar = survey[i][1];
+            if(choice === 5) table[secondChar] += 1;
+            if(choice === 6) table[secondChar] += 2;
+            if(choice === 7) table[secondChar] += 3;
+        }
+    }
+    
+    if(table['R'] >= table['T']) answer += 'R';
+    else answer += 'T';
+    
+    if(table['C'] >= table['F']) answer += 'C';
+    else answer += 'F';
+    
+    if(table['J'] >= table['M']) answer += 'J';
+    else answer += 'M';
+    
+    if(table['A'] >= table['N']) answer += 'A';
+    else answer += 'N';
+    
+    return answer;
+}
+```
+
+## 신고 결과 받기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/92334
+
+```js
+function solution(id_list, report, k) {
+    var answer = [];
+    
+    const reporterTable = {}
+    const table = {}
+    for(let i=0;i<report.length;i++) {
+        const reportArr = report[i].split(' ');
+        const reporter = reportArr[0];
+        const reported = reportArr[1];
+        
+        if(table[reported]) {
+            if(table[reported]['reportUsers'][reporter]) continue;
+            table[reported]['reportUsers'][reporter] = true;
+            table[reported]['count']++;
+        }
+        else {
+            table[reported] = {
+                count: 1,
+                reportUsers: {
+                    [reporter]:true
+                }
+            }
+        }
+    }
+    
+    for(reported in table) {
+        if((table[reported]['count']) >= k ) {
+            for(user in table[reported]['reportUsers']) {
+                if(reporterTable[user]) reporterTable[user]++;
+                else reporterTable[user] = 1;
+            }
+        }
+    }
+    
+    for(id of id_list) {
+        if(reporterTable[id]) answer.push(reporterTable[id])
+        else answer.push(0);
+    }
+    
+    return answer;
+}
+```
+
+## 나머지가 1이 되는 수 찾기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/87389
+
+```js
+function solution(n) {
+    var answer = 0;
+    
+    while(n%answer !== 1) {
+        answer++;
+    }
+    
+    return answer;
+}
+```
+
+## *최소직사각형
+
+https://school.programmers.co.kr/learn/courses/30/lessons/86491
+
+```js
+function solution(sizes) {
+    var answer = 0;
+    
+    let max = 0;
+    let min = 0;
+    for(let size of sizes) {
+        if(size[0] >= size[1]) {
+            if(size[0] >= max) {
+                max = size[0];
+            }
+                if(size[1] > min) min = size[1];
+        }
+        else {
+            if(size[1] >= max) {
+                max = size[1];
+            }
+            if(size[0] > min) min = size[0];
+        }
+    }
+    
+    answer = max * min;
+    
+    return answer;
+}
+```
