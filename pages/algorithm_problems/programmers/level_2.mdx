@@ -1,0 +1,31 @@
+# 프로그래머스 Lv.2
+
+Lv.2 문제 모아보기:
+https://school.programmers.co.kr/learn/challenges?order=recent&page=1&levels=2&languages=javascript
+
+## 요격 시스템
+
+https://school.programmers.co.kr/learn/courses/30/lessons/181188
+
+```js
+function solution(targets) {
+    var answer = 0;
+    
+    targets.sort((a,b) => a[0] - b[0]);
+    
+    let start = 0;
+    let end = 0;
+    for(let target of targets) {
+        if(target[0] >= end) {
+            start = target[0];
+            end = target[1];
+            answer++;
+        }
+        else if(target[1] < end) {
+            end = target[1];
+        }
+    }
+    
+    return answer;
+}
+```

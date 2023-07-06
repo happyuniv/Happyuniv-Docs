@@ -780,3 +780,102 @@ function solution(sizes) {
     return answer;
 }
 ```
+
+## 없는 숫자 더하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/86051
+
+```js
+function solution(numbers) {
+    var answer = 45;
+    
+    for(number of numbers) answer -= number;
+    
+    return answer;
+}
+```
+
+## 부족한 금액 계산하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/82612
+
+```js
+function solution(price, money, count) {
+    var answer = -1;
+    
+    const fee = price*count*(count+1)/2
+    if(money >= fee) answer = 0;
+    else answer = fee - money
+    
+    return answer;
+}
+```
+
+## 숫자 문자열과 영단어
+
+https://school.programmers.co.kr/learn/courses/30/lessons/81301
+
+```js
+function solution(s) {
+    var answer = s;
+    const table = {'zero':0,'one':1,'two':2,'three':3,'four':4,'five':5,
+                  'six':6,'seven':7,'eight':8,'nine':9};
+    
+    for(let word in table) {
+        answer = answer.replaceAll(word,table[word]);
+    }
+    answer = parseInt(answer);
+    
+    return answer;
+}
+```
+
+## 약수의 개수와 덧셈
+
+https://school.programmers.co.kr/learn/courses/30/lessons/77884
+
+```js
+function solution(left, right) {
+    var answer = 0;
+    
+    for(let i=left;i<=right;i++) {
+        let count = 0;
+        
+        for(let j=1;j<=i;j++) {
+            if(i%j === 0) count++;
+        }
+
+        if(count%2 === 0) answer += i;
+        else answer -= i;
+    }
+    return answer;
+}
+```
+
+## 로또의 최고 순위와 최저 순위
+
+https://school.programmers.co.kr/learn/courses/30/lessons/77484
+
+```js
+function solution(lottos, win_nums) {
+    var answer = [];
+    
+    const rank_table = {6:1,5:2,4:3,3:4,2:5,1:6,0:6}
+    
+    const table = {};
+    for(win_num of win_nums) {
+        table[win_num] = true;
+    }
+    
+    let count = 0;
+    let extra_count = 0;
+    for(num of lottos) {
+        if(num === 0) extra_count++;
+        else if(table[num]) count++;
+    }
+    
+    answer.push(rank_table[count+extra_count],rank_table[count]);
+    
+    return answer;
+}
+```
