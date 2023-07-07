@@ -1,0 +1,111 @@
+# Sort
+
+정렬 시각화 사이트 https://visualgo.net/en/sorting
+
+## Bubble Sort
+
+### 시간복잡도
+
+| Best | Average | Worst | 
+| :----: | :----: | :----: | 
+| O(N) | O(N<sup>2</sup>) | O(N<sup>2</sup>) | 
+
+### 구현
+
+```js
+function bubbleSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - i; j++) {
+      if (arr[j] > arr[j + 1]) [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+    }
+  }
+
+  return arr;
+}
+```
+
+## Selection Sort
+
+### 시간복잡도
+
+| Best | Average | Worst | 
+| :----: | :----: | :----: | 
+| O(N<sup>2</sup>) | O(N<sup>2</sup>) | O(N<sup>2</sup>) | 
+
+### 구현
+
+```js
+function selectionSort(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let min = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[min] > arr[j]) min = j;
+    }
+    [arr[i], arr[min]] = [arr[min], arr[i]];
+  }
+
+  return arr;
+}
+```
+
+## Insertion Sort
+
+### 시간복잡도
+
+| Best | Average | Worst | 
+| :----: | :----: | :----: | 
+| O(N) | O(N<sup>2</sup>) | O(N<sup>2</sup>) | 
+
+### 구현
+
+```js
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let current = i;
+    while (current >= 1 && arr[current] < arr[current - 1]) {
+      [arr[current - 1], arr[current]] = [arr[current], arr[current - 1]];
+      current--;
+    }
+  }
+
+  return arr;
+}
+```
+
+## Quick Sort
+
+### 시간복잡도
+
+| Best | Average | Worst | 
+| :----: | :----: | :----: | 
+| O(Nlog(N)) | O(Nlog(N)) | O(N<sup>2</sup>) | 
+
+### 구현
+
+```js
+function quickSort(arr) {
+  function sort(arr, left, right) {
+    if (left >= right) return;
+
+    const pivot = arr[left];
+    let i = left;
+    let j = right;
+
+    while (i < j) {
+      while (pivot < arr[j]) j--;
+      while (i < j && pivot >= arr[i]) i++;
+      
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    [arr[left], arr[i]] = [arr[i], arr[left]];
+
+    sort(arr, left, i - 1);
+    sort(arr, i + 1, right);
+  }
+
+  sort(arr, 0, arr.length - 1);
+
+  return arr;
+}
+```
