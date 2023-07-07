@@ -879,3 +879,129 @@ function solution(lottos, win_nums) {
     return answer;
 }
 ```
+
+## 음양 더하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/76501
+
+```js
+function solution(absolutes, signs) {
+    var answer = 0;
+    
+    for(let i=0;i<absolutes.length;i++) {
+        if(signs[i]) answer += absolutes[i];
+        else answer -= absolutes[i];
+    }
+    
+    return answer;
+}
+```
+
+## 신규 아이디 추천
+
+https://school.programmers.co.kr/learn/courses/30/lessons/72410
+
+```js
+function solution(new_id) {
+    var answer = '';
+    
+    for(let i=0;i<new_id.length;i++) {
+        let code = new_id.charCodeAt(i);
+        
+        if(code >= 65 && code <= 90) {
+            code += 32;
+            new_id = new_id.replace(new_id[i],String.fromCharCode(code));
+        }
+                
+        if(!((code >=97 && code <=122) || (code >=48 && code <= 57) || code === 45 || code === 95 || code === 46)) {
+            new_id = new_id.replace(new_id[i],'');
+            i--;
+        }
+    }
+    
+    for(let i=0;i<new_id.length;i++) {
+        if(new_id[i] === '.' && new_id[i+1] === '.') {
+            new_id = new_id.replace('..','.');
+            i--;
+        }
+    }
+    
+    const arr = Array.from(new_id);
+    if(arr[0] === '.') arr.shift();
+    if(arr[arr.length-1] === '.') arr.pop();
+    
+    if(arr.length === 0) arr.push('a');
+    
+    if(arr.length >= 16) arr.splice(15);
+    if(arr[arr.length-1] === '.') arr.pop();
+    
+    if(arr.length <= 2) {
+        const last = arr[arr.length-1];
+        while(arr.length < 3) arr.push(last);
+    }
+    answer = arr.join('');
+    
+    return answer;
+}
+```
+
+## 내적
+
+https://school.programmers.co.kr/learn/courses/30/lessons/70128
+
+```js
+function solution(a, b) {
+    var answer = 0;
+    
+    for(let i=0;i<a.length;i++) answer += a[i] * b[i];
+
+    return answer;
+}
+```
+
+## 3진법 뒤집기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/68935
+
+```js
+function solution(n) {
+    var answer = 0;
+    
+    let num = '';
+    while(n>0) {
+        num += n%3 ;
+        n = Math.floor(n/3);
+    }
+    
+    for(let i=num.length-1,j=0;i>=0;i--,j++) {
+        answer += Number(num[i])*Math.pow(3,j);
+    }
+    
+    return answer;
+}
+```
+
+## 두 개 뽑아서 더하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/68644
+
+```js
+function solution(numbers) {
+    var answer = [];
+    
+    const table = {}
+    for(let i=0;i<numbers.length;i++) {
+        for(let j=i+1;j<numbers.length;j++) {
+            if(table[numbers[i]+numbers[j]]) continue;
+            else {
+                table[numbers[i]+numbers[j]] = true;
+                answer.push(numbers[i]+numbers[j]);
+            } 
+        }
+    }
+
+    answer.sort((a,b) => a-b);
+    
+    return answer;
+}
+```

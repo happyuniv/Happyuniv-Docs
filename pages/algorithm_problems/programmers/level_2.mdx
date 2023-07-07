@@ -29,3 +29,28 @@ function solution(targets) {
     return answer;
 }
 ```
+
+## 두 원 사이의 정수쌍
+
+https://school.programmers.co.kr/learn/courses/30/lessons/181187
+
+```js
+function solution(r1, r2) {
+    var answer = 0;
+    
+    let count1 = 0;
+    for(let i=1;i<r1;i++) {
+        if(Number.isInteger(Math.sqrt((r1+i)*(r1-i)))) count1--;
+        count1 += Math.floor(Math.sqrt((r1+i)*(r1-i)));
+    }
+    
+    let count2 = 0;
+    for(let i=1;i<r2;i++) {
+        count2 += Math.floor(Math.sqrt((r2+i)*(r2-i)));
+    }
+    
+    answer += 4*(r2-r1+1) + 4*(count2-count1);
+    
+    return answer;
+}
+```
