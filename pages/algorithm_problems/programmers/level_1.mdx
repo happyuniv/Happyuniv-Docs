@@ -1005,3 +1005,199 @@ function solution(numbers) {
     return answer;
 }
 ```
+
+## 키패드 누르기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/67256
+
+```js
+function solution(numbers, hand) {
+    var answer = '';
+    
+    const table = {
+        1: {2:1,5:2,8:3,0:4},
+        4: {2:2,5:1,8:2,0:3},
+        7: {2:3,5:2,8:1,0:2},
+        3: {2:1,5:2,8:3,0:4},
+        6: {2:2,5:1,8:2,0:3},
+        9: {2:3,5:2,8:1,0:2},
+        2: {2:0,5:1,8:2,0:3},
+        5: {2:1,5:0,8:1,0:2},
+        8: {2:2,5:1,8:0,0:1},
+        0: {2:3,5:2,8:1,0:0},
+        '*': {2:4,5:3,8:2,0:1},
+        '#': {2:4,5:3,8:2,0:1}
+    }
+    
+    let left ='*';
+    let right = '#';
+    for(number of numbers) {
+        if(number === 1 || number === 4 || number === 7) {
+            answer += 'L';
+            left = number;
+        }
+        else if(number === 3 || number === 6 || number === 9) {
+            answer += 'R';
+            right = number;
+        }
+        else {
+            const leftCount = parseInt(table[left][number]);
+            const rightCount = parseInt(table[right][number]);
+            if(leftCount < rightCount) {
+                answer += 'L';
+                left = number;
+            }
+            else if(leftCount > rightCount) {
+                answer += 'R';
+                right = number;
+            }
+            else {
+                if(hand === 'left') {
+                    answer += 'L';
+                    left = number;
+                }
+                else {
+                    answer += 'R';
+                    right = number;
+                }
+            }
+        }
+    }
+    
+    return answer;
+}
+```
+
+## 크레인 인형뽑기 게임
+
+https://school.programmers.co.kr/learn/courses/30/lessons/64061
+
+```js
+function solution(board, moves) {
+    var answer = 0;
+    
+    const basket = [];
+    for(let move of moves) {
+        for(let i=0;i<board.length;i++) {
+            const boardTop = board[i][move-1];
+            if(boardTop) {
+                const basketTop = basket.length-1
+                if(basket[basketTop] && basket[basketTop] === boardTop) {
+                    answer += 2;
+                    basket.pop();
+                }
+                else basket.push(boardTop);
+                
+                board[i][move-1] = 0;
+                break;
+            }
+        }
+    }
+    
+    return answer;
+}
+```
+
+## *실패율
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42889
+
+```js
+function solution(N, stages) {
+    var answer = [];
+    
+    const failArr = Array(N+2).fill(0);
+    const successArr = Array(N+2).fill(0);
+    
+    for(stage of stages) failArr[stage]++;
+
+    for(let i=1;i<failArr.length;i++) {
+        for(let j=1;j<=i;j++) {
+            successArr[j] += failArr[i];
+        }
+    }
+    
+    for(let i=1;i<=N;i++) answer.push([i,failArr[i]/successArr[i]]);
+
+    answer.sort((a,b) => b[1]-a[1]);
+    answer = answer.map(item => item[0]);
+    
+    return answer;
+}
+```
+
+## *체육복
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42862
+
+```js
+function solution(n, lost, reserve) {
+    var answer = 0;
+    
+    answer = n - lost.length;
+    
+    lost.sort((a,b) => a-b);
+    reserve.sort((a,b) => a-b);
+    
+    const table = {}
+    for(let i=0;i<lost.length;i++) table[lost[i]] = true;
+
+    for(let i=0;i<reserve.length;i++) {
+        if(table[reserve[i]]) {
+            table[reserve[i]] = false;
+            answer++;
+            reserve = reserve.filter((item) => item !== reserve[i]);  
+            i--;
+        }
+    }
+    
+    for(let i=0;i<reserve.length;i++) {
+        if(table[reserve[i]-1] || table[reserve[i]+1]) {
+            if(table[reserve[i]-1]) table[reserve[i]-1] = false;
+            else if(table[reserve[i]+1]) table[reserve[i]+1] = false;
+            answer++;
+        }    
+    }
+    
+    return answer;
+}
+```
+
+## 모의고사
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42840
+
+```js
+function solution(answers) {
+    var answer = [];
+    
+    const score = Array(4).fill(0);
+    answers = answers.join('');
+    const table = {
+        1:'12345',
+        2:'21232425',
+        3:'3311224455'
+    }
+    
+    for(let num in table) {
+        if(table[num].length < answers.length) {
+            table[num] = table[num].padEnd(answers.length,table[num]);
+        }
+        else table[num] = table[num].slice(0,answers.length);
+    }
+    
+    for(let i=0;i<answers.length;i++) {
+         if(table[1][i] === answers[i]) score[1]++;
+         if(table[2][i] === answers[i]) score[2]++;
+         if(table[3][i] === answers[i]) score[3]++;
+    }
+    answer.push([1,score[1]],[2,score[2]],[3,score[3]]);
+    answer.sort((a,b) => b[1] - a[1]);
+    
+    const max = answer[0][1];
+    if(max > answer[1][1]) answer = [answer[0][0]];
+    else answer = answer.filter((ans) => ans[1] === max).map((ans) => ans[0]);
+
+    return answer;
+}
+```

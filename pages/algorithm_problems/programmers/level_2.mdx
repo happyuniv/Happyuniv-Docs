@@ -54,3 +54,31 @@ function solution(r1, r2) {
     return answer;
 }
 ```
+
+## *연속된 부분 수열의 합
+
+https://school.programmers.co.kr/learn/courses/30/lessons/178870
+
+```js
+function solution(sequence, k) {
+    var answer = [];
+    
+    let end = 0;
+    let sum = 0;
+    for(let i=0;i<sequence.length;i++) {
+        while(sum < k && end < sequence.length) {
+            sum += sequence[end];
+            end++;
+        }
+        
+        if(sum === k) answer.push([i,end-1]);
+        
+        sum -= sequence[i];
+    }
+    
+    answer.sort((a,b) => (a[1]-a[0])-(b[1]-b[0]));
+    answer = answer[0];
+    
+    return answer;
+}
+```
