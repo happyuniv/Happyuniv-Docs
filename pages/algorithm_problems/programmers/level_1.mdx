@@ -1201,3 +1201,134 @@ function solution(answers) {
     return answer;
 }
 ```
+
+## K번째수
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42748
+
+```js
+function solution(array, commands) {
+    var answer = [];
+    
+    for(command of commands) {
+        const arr = array.slice(command[0]-1,command[1]);
+        arr.sort((a,b) => a-b);
+        answer.push(arr[command[2]-1]);
+    }
+    
+    return answer;
+}
+```
+
+## 완주하지 못한 선수
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42576
+
+```js
+function solution(participant, completion) {
+    var answer = '';
+
+    participant.sort();
+    completion.sort();
+
+    for(let i=0;i<completion.length;i++) 
+        if(participant[i] !== completion[i]) return participant[i];
+
+    answer = participant[participant.length-1];
+
+    return answer;
+}
+```
+
+## [1차] 다트 게임
+
+https://school.programmers.co.kr/learn/courses/30/lessons/17682
+
+```js
+function solution(dartResult) {
+    var answer = 0;
+    
+    const scores = [];
+    for(let i=0;i<dartResult.length;i++) {
+        
+        let char = Number(dartResult[i]);
+        if(isNaN(char)) {
+            char = dartResult[i];
+            let num = scores[scores.length-1];
+            if(char === 'S') continue;
+            if(char === 'D' || char === 'T') {
+                if(char === 'D') num = num**2;
+                else if(char === 'T') num = num**3;
+            }
+            else {
+                if(char === '*') {
+                    num *= 2;
+                    if(scores[scores.length-2])
+                        scores[scores.length-2] = scores[scores.length-2] * 2;
+                }
+                else {
+                    num *= -1;
+                }
+            }
+            scores[scores.length-1] = num;
+        }
+        else {
+            if(dartResult[i+1] && !isNaN(Number(dartResult[i+1]))) {
+                scores.push(10);
+                i++;
+            }
+            else scores.push(char);
+        }
+    }
+    
+    for(const score of scores) answer += score;
+    
+    return answer;
+}
+```
+
+## [1차] 비밀지도
+
+https://school.programmers.co.kr/learn/courses/30/lessons/17681
+
+```js
+function solution(n, arr1, arr2) {
+    var answer = [];
+    
+    for(let i=0;i<n;i++) {
+        let num = arr1[i] | arr2[i];
+        let char = '';
+        
+        while(num>0) {
+            if(num%2 === 0) char += ' ';
+            else char += '#';
+            num = Math.floor(num/2);
+        }
+        
+        char = char.padEnd(n,' ').split('').reverse().join('');
+        answer.push(char);
+    }
+    
+    return answer;
+}
+```
+
+## 예산
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12982
+
+```js
+function solution(d, budget) {
+    var answer = 0;
+    
+    d.sort((a,b) => a-b);
+    for(money of d) {
+        budget -= money;
+        if(budget < 0) break;
+        answer++;
+    }
+    
+    return answer;
+}
+```
+

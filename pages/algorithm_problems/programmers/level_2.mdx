@@ -82,3 +82,62 @@ function solution(sequence, k) {
     return answer;
 }
 ```
+
+## 과제 진행하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/176962
+
+```js
+function solution(plans) {
+    var answer = [];
+    
+    plans = plans.map((plan) => {
+        plan[1] = plan[1].split(':').map((time) => Number(time));
+        plan[2] = Number(plan[2]);
+        return plan;
+    }).sort((a,b) => {
+        if(a[1][0] === b[1][0]) return a[1][1] - b[1][1];
+        return a[1][0] - b[1][0];
+    });
+    
+    const pause = [];
+    for(let i=0;i<plans.length;i++) {
+        if(i === (plans.length-1)) {
+            answer.push(plans[i][0]);
+            while(pause.length) {
+                const plan = pause.pop();
+                answer.push(plan[0]);
+            }
+        }
+        else {
+            let [name, start, playtime] = plans[i];
+            const [hour,minute] = start;
+            const [nextHour,nextMinute] = plans[i+1][1];
+            let rest = nextHour*60+nextMinute - (hour*60+minute+playtime);
+            
+            if(rest === 0) {
+                answer.push(name);
+            }
+            else if(rest > 0) {
+                answer.push(name);
+                while(rest > 0 && pause.length) {
+                    const [pausedName,pausedStart,pausedPlaytime] = pause.pop();
+                    rest -= pausedPlaytime;
+                    if(rest < 0) {
+                        pause.push([pausedName,pausedStart,-rest]);
+                    }
+                    else {
+                        answer.push(pausedName);
+                    }
+                }
+            }
+            else {
+                plans[i][2] = -rest;
+                pause.push(plans[i]);
+            }
+        }
+    }
+    
+    return answer;
+}
+```
