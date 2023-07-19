@@ -1332,3 +1332,100 @@ function solution(d, budget) {
 }
 ```
 
+## *소수 만들기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12977
+
+```js
+function solution(nums) {
+    var answer = 0;
+    
+    let sum = 0;
+    function combination(arr,n,r) {
+        for(let i=n;i<arr.length-r+1;i++) {
+            if(r === 1) {
+                sum += arr[i];
+                for(let j=2;j<=sum;j++) {
+                    if(j === sum) {
+                        answer++;
+                        break;
+                    }
+                    if(sum%j === 0) {
+                        break;
+                    }
+                }
+                sum -= arr[i];
+            }
+            else {
+                sum += arr[i];
+                combination(arr,i+1,r-1);
+                sum -= arr[i];
+            }
+        }
+    }
+    combination(nums,0,3)
+        
+    return answer;
+}
+```
+
+## 직사각형 별찍기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12969
+
+```js
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', data => {
+    const n = data.split(" ");
+    const a = Number(n[0]), b = Number(n[1]);
+    
+    let stars = '';
+    for(let i=0;i<a;i++) stars += '*';
+    for(let i=0;i<b;i++) console.log(stars);
+
+});
+```
+
+## x만큼 간격이 있는 n개의 숫자
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12954
+
+```js
+function solution(x, n) {
+    var answer = [];
+    
+    for(let i=1;i<=n;i++) answer.push(x*i);
+
+    return answer;
+}
+```
+
+## 행렬의 덧셈
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12950
+
+```js
+function solution(arr1, arr2) {
+    var answer = [[]];
+    
+    answer = arr1.map((arr,i) => arr.map((num,j) => num+arr2[i][j]))
+    
+    return answer;
+}
+
+```
+
+## 핸드폰 번호 가리기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12948
+
+```js
+function solution(phone_number) {
+    var answer = '';
+    
+    answer = phone_number.slice(-4).padStart(phone_number.length,'*');
+    
+    return answer;
+}
+```
+
