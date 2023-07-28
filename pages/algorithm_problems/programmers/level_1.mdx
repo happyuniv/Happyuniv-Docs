@@ -1607,3 +1607,104 @@ function solution(n)
     return answer;
 }
 ```
+
+## 이상한 문자 만들기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12930
+
+```js
+function solution(s) {
+    var answer = '';
+    
+    let even = true;
+    for(let word of s) {
+        if(word === ' ') {
+            even = true;
+            answer += word;
+            continue;
+        }
+        if(even) word = word.toUpperCase();
+        else word = word.toLowerCase();
+        even = !even;
+        answer += word;
+    }
+    
+    return answer;
+}
+```
+
+## 약수의 합
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12928
+
+```js
+function solution(n) {
+    var answer = 0;
+    
+    for(let i=1;i<=n;i++) {
+        if(n%i === 0) answer += i; 
+    }
+    
+    return answer;
+}
+```
+
+## 시저 암호
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12926
+
+```js
+function solution(s, n) {
+    var answer = '';
+    
+    for(let i=0;i<s.length;i++) {
+        if(s[i] === ' ') {
+            answer += ' ';
+            continue;
+        }
+        let charCode = s.charCodeAt(i);
+        if(charCode >=65 && charCode <=90) {
+            charCode += n;
+            if(charCode > 90) charCode -= 26;
+        }
+        else if(charCode >=97 && charCode <=122) {
+            charCode += n;
+            if(charCode > 122) charCode -= 26;
+        }
+        answer += String.fromCharCode(charCode);
+    }
+    
+    return answer;
+}
+```
+
+## 문자열을 정수로 바꾸기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12925
+
+```js
+function solution(s) {
+    var answer = 0;
+    
+    if(s[0] === '+') answer = +s.slice(1);
+    else if(s[0] === '-') answer = -s.slice(1);
+    else answer = +s;
+    
+    return answer;
+}
+```
+
+## 수박수박수박수박수박수?
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12922
+
+```js
+function solution(n) {
+    var answer = '';
+    
+    const word = '수박';
+    for(let i=0;i<n;i++) answer += word[i%2];
+
+    return answer;
+}
+```

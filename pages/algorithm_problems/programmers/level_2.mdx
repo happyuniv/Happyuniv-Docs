@@ -141,3 +141,51 @@ function solution(plans) {
     return answer;
 }
 ```
+
+## 광물 캐기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/172927
+
+```js
+function solution(picks, minerals) {
+    var answer = 0;
+    
+    const table = {
+        0: { 0:1,1:1,2:1 },
+        1: { 0:5,1:1,2:1 },
+        2: { 0:25,1:5,2:1 }
+    }
+    
+    const blocks = [];
+    const picksSum = 5*(picks[0] + picks[1] + picks[2])
+    
+    for(let i=0;i<picksSum;i+=5) {
+        const block = [0,0,0];
+        minerals.slice(i,i+5).forEach((mineral) => {
+            if(mineral === 'diamond') block[0]++;
+            else if(mineral === 'iron') block[1]++;
+            else if(mineral === 'stone') block[2]++;
+        })
+        blocks.push(block);
+    }
+      
+    blocks.sort((a,b) => {
+        if(a[0] === b[0]) return b[1] - a[1];
+        return b[0] - a[0];
+    });
+    
+    for(let i=0;i<blocks.length;i++) {
+        for(let j=0;j<picks.length;j++) {
+            if(picks[j]) {   
+                for(let k=0;k<blocks[i].length;k++) {
+                    answer += blocks[i][k]*table[j][k];
+                }
+                picks[j] -= 1;
+                break;
+            }
+        }
+    }
+    
+    return answer;
+}
+```
