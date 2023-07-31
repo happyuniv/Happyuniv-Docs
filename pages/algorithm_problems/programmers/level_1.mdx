@@ -1799,3 +1799,87 @@ function solution(s){
     return answer;
 }
 ```
+
+## 문자열 내 마음대로 정렬하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12915
+
+```js
+function solution(strings, n) {
+    var answer = [];
+    
+    answer = strings.sort((a,b) => {
+        if(a[n] > b[n]) return 1;
+        else if(a[n] < b[n]) return -1;
+        
+        if(a>b) return 1;
+        else return -1;
+    })
+    
+    return answer;
+}
+```
+
+## 두 정수 사이의 합
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12912
+
+```js
+function solution(a, b) {
+    var answer = 0;
+    
+    if(a>b) for(;a>=b;b++) answer += b;
+    else for(;b>=a;a++) answer += a;
+    
+    return answer;
+}
+```
+
+## 나누어 떨어지는 숫자 배열
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12910
+
+```js
+function solution(arr, divisor) {
+    var answer = [];
+    
+    answer = arr.filter((num) => !(num%divisor)).sort((a,b) => a-b);
+    if(!answer.length) answer.push(-1);
+    
+    return answer;
+}
+```
+
+## 같은 숫자는 싫어
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12906
+
+```js
+function solution(arr)
+{
+    var answer = [];
+
+    let cur = 10; 
+    for(num of arr) {
+        if(cur !== num) {
+            answer.push(num);
+            cur = num;
+        }
+    }
+    
+    return answer;
+}
+```
+
+## 가운데 글자 가져오기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12903
+
+```js
+function solution(s) {
+    var answer = '';
+    
+    answer = s.length % 2 ? s[Math.floor(s.length/2)] : s[s.length/2-1]+s[s.length/2];  
+    return answer;
+}
+```
