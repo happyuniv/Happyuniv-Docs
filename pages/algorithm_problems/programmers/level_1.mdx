@@ -1708,3 +1708,94 @@ function solution(n) {
     return answer;
 }
 ```
+
+## *소수 찾기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12921
+
+```js
+function solution(n) {
+    var answer = 0;
+    
+    const table = {}
+    for(let i=2;i<=n;i++) {
+        if(table[i]) continue;
+        
+        for(let j=2;j<=n/i;j++) {
+            table[i*j] = true;
+        }
+        
+        answer++;
+    }
+    
+    return answer;
+}
+```
+
+## 서울에서 김서방 찾기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12919
+
+```js
+function solution(seoul) {
+    var answer = '';
+    
+    seoul.forEach((name,index) => {
+        if(name === 'Kim') {
+            answer = `김서방은 ${index}에 있다`;
+            return;
+        }
+    })
+    
+    return answer;
+}
+```
+
+## 문자열 다루기 기본
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12918
+
+```js
+function solution(s) {
+    var answer = true;
+    
+    if(s.length !== 4 && s.length !== 6) answer = false;
+    if(s.match(/[^0-9]/)) answer = false;
+    
+    return answer;
+}
+```
+
+## 문자열 내림차순으로 배치하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12917
+
+```js
+function solution(s) {
+    var answer = '';
+    
+    answer = s.split('').sort((a,b) => -(a>b)).join('');
+    
+    return answer;
+}
+```
+
+## 문자열 내 p와 y의 개수
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12916
+
+```js
+function solution(s){
+    var answer = true;
+
+    let countP = 0, countY = 0;
+    for(alphabet of s) {
+        if(alphabet === 'p' || alphabet === 'P') countP++;
+        else if(alphabet === 'y' || alphabet === 'Y') countY++;
+    }
+    
+    if(countP !== countY) answer = false;
+
+    return answer;
+}
+```
