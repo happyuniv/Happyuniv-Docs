@@ -1883,3 +1883,46 @@ function solution(s) {
     return answer;
 }
 ```
+
+## 2016년
+
+https://school.programmers.co.kr/learn/courses/30/lessons/12901
+
+```js
+function solution(a, b) {
+    var answer = '';
+    
+    const month = [31,29,31,30,31,30,31,31,30,31,30,31];
+    const day = ['THU','FRI','SAT','SUN','MON','TUE','WED'];
+    
+    let sum = 0;
+    for(let i=0;i<a-1;i++) {
+        sum += month[i];
+    }
+    sum += b;
+    answer = day[sum%7];
+    
+    return answer;
+}
+```
+
+## 폰켓몬
+
+https://school.programmers.co.kr/learn/courses/30/lessons/1845
+
+```js
+function solution(nums) {
+    var answer = 0;
+    
+    nums.reduce((acc,cur) => {
+        if(acc[cur]) return acc;
+        answer++;
+        acc[cur] = true;
+        return acc;
+    },{})
+    
+    if(answer > nums.length/2) answer = nums.length/2;
+    
+    return answer;
+}
+```
