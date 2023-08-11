@@ -1,0 +1,121 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+## Heap
+
+### 시간복잡도
+
+| 최대/최소 접근 | 삽입 | 삭제 |
+| :-: | ---- | ---- |
+| O(1) | O(log(N)) | O(log(N)) |
+
+### 구현
+
+<Tabs items={['Heap.js','MinHeap.js','MaxHeap.js']}>
+  <Tab>
+```js filename="Heap.js"
+class Heap {
+  constructor() {
+    this.heapContainer = [];
+  }
+
+  insert(value) {
+    this.heapContainer.push(value);
+    this.heapifyUp();
+  }
+
+  remove() {
+    if (this.heapContainer.length === 0) return null;
+    if (this.heapContainer.length === 1) return this.heapContainer.pop();
+
+    const value = this.heapContainer[0];
+    this.heapifyDown();
+
+    return value;
+  }
+
+  peek() {
+    return this.heapContainer[0] ? this.heapContainer[0] : null;
+  }
+
+  heapifyUp() {
+    let parentIndex = Math.floor(this.heapContainer.length / 2) - 1;
+    let childIndex = this.heapContainer.length - 1;
+    while (
+      childIndex > 0 &&
+      this.compareOrder(
+        this.heapContainer[parentIndex],
+        this.heapContainer[childIndex]
+      )
+    ) {
+      this.swap(parentIndex, childIndex);
+      childIndex = parentIndex;
+      parentIndex = Math.floor((parentIndex - 1) / 2);
+    }
+  }
+
+  heapifyDown() {
+    let parentIndex = 0;
+    let leftChildIndex = 1;
+    let rightChildIndex = 2;
+    this.heapContainer[parentIndex] = this.heapContainer.pop();
+    while (this.heapContainer[leftChildIndex]) {
+      let nextIndex = leftChildIndex;
+      if (this.heapContainer[rightChildIndex]) {
+        if (
+          this.compareOrder(
+            this.heapContainer[leftChildIndex],
+            this.heapContainer[rightChildIndex]
+          )
+        ) {
+          nextIndex = rightChildIndex;
+        }
+      }
+
+      if (
+        this.compareOrder(
+          this.heapContainer[nextIndex],
+          this.heapContainer[parentIndex]
+        )
+      ) {
+        break;
+      }
+
+      this.swap(parentIndex, nextIndex);
+      parentIndex = nextIndex;
+      leftChildIndex = parentIndex * 2 + 1;
+      rightChildIndex = parentIndex * 2 + 2;
+    }
+  }
+
+  compareOrder(firstElement, secondElement) {}
+
+  swap(indexOne, indexTwo) {
+    [this.heapContainer[indexOne], this.heapContainer[indexTwo]] = [
+      this.heapContainer[indexTwo],
+      this.heapContainer[indexOne]
+    ];
+  }
+}
+```
+  </Tab>
+  <Tab>
+```js filename="MinHeap.js"
+class MinHeap extends Heap {
+  compareOrder(firstElement, secondElement) {
+    return firstElement > secondElement;
+  }
+}
+```
+  </Tab>
+  <Tab>
+```js filename="MaxHeap.js"
+class MaxHeap extends Heap {
+  compareOrder(firstElement, secondElement) {
+    return firstElement < secondElement;
+  }
+}
+```
+  </Tab>
+</Tabs>
+
+
