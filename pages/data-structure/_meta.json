@@ -4,6 +4,7 @@
   "stack": "Stack",
   "hash-table": "Hash Table",
   "heap": "Heap",
+  "priority-queue": "Priority Queue",
   "tree": "Tree",
   "graph": "Graph"
 }

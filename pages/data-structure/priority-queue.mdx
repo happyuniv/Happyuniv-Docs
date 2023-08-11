@@ -1,0 +1,43 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+## Priority Queue
+
+### 시간복잡도
+
+| 최대/최소 접근 | 삽입 | 삭제 |
+| :-: | ---- | ---- |
+| O(1) | O(log(N)) | O(log(N)) |
+
+### 구현
+
+<Tabs items={['PriorityQueue.js']}>
+  <Tab>
+```js filename="PriorityQueue.js"
+import { MinHeap } from "./Heap";
+
+class PriorityQueue {
+  constructor() {
+    this.minHeap = new MinHeap();
+  }
+
+  enqueue(value) {
+    this.minHeap.insert(value);
+  }
+
+  dequeue() {
+    return this.minHeap.remove();
+  }
+
+  isEmpty() {
+    return this.peek() ? false : true;
+  }
+
+  peek() {
+    return this.minHeap.peek();
+  }
+}
+```
+  </Tab>
+</Tabs>
+
+
