@@ -1,0 +1,51 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+## Graph
+
+### 구현
+
+<Tabs items={['Graph.js']}>
+  <Tab>
+```js filename="Graph.js"
+class Graph {
+  constructor(isDirected = false) {
+    this.vertices = {};
+    this.isDirected = isDirected;
+  }
+
+  addVertex(vertex) {
+    this.vertices[vertex] = {};
+  }
+
+  addEdge(vertexOne, vertexTwo, weight = 0) {
+    this.vertices[vertexOne][vertexTwo] = weight;
+    if (!this.isDirected) this.vertices[vertexTwo][vertexOne] = weight;
+  }
+
+  removeVertex(vertex) {
+    for (const neighborVertex in this.vertices[vertex]) {
+      this.removeEdge(vertex, neighborVertex);
+    }
+    delete this.vertices[vertex];
+  }
+
+  removeEdge(vertexOne, vertexTwo) {
+    if (
+      this.vertices[vertexOne] &&
+      this.vertices[vertexOne][vertexTwo] !== undefined
+    ) {
+      delete this.vertices[vertexOne][vertexTwo];
+    }
+    if (
+      this.vertices[vertexTwo] &&
+      this.vertices[vertexTwo][vertexOne] !== undefined
+    ) {
+      delete this.vertices[vertexTwo][vertexOne];
+    }
+  }
+}
+```
+  </Tab>
+</Tabs>
+
+
