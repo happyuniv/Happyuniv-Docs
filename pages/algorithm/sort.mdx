@@ -109,3 +109,89 @@ function quickSort(arr) {
   return arr;
 }
 ```
+
+## Heap Sort
+
+### 시간복잡도
+
+| Best | Average | Worst | 
+| :----: | :----: | :----: | 
+| O(Nlog(N)) | O(Nlog(N)) | O(Nlog(N)) | 
+
+### 구현
+
+```js
+function heapSort(arr) {
+  function heapify(arr, index) {
+    let parent = Math.floor(index / 2) - 1;
+
+    while (parent >= 0) {
+      const leftChild = parent * 2 + 1;
+      const rightChild = parent * 2 + 2;
+
+      if (arr[leftChild] > arr[rightChild] && arr[leftChild] > arr[parent]) {
+        [arr[parent], arr[leftChild]] = [arr[leftChild], arr[parent]];
+      } else if (
+        arr[rightChild] > arr[leftChild] &&
+        arr[rightChild] > arr[parent]
+      ) {
+        [arr[parent], arr[rightChild]] = [arr[rightChild], arr[parent]];
+      }
+
+      parent--;
+    }
+  }
+
+  for (let i = arr.length - 1; i >= 0; i--) {
+    heapify(arr, i);
+    if (arr[0] > arr[i]) [arr[0], arr[i]] = [arr[i], arr[0]];
+  }
+
+  return arr;
+}
+```
+
+## Merge Sort
+
+### 시간복잡도
+
+| Best | Average | Worst | 
+| :----: | :----: | :----: | 
+| O(Nlog(N)) | O(Nlog(N)) | O(Nlog(N)) | 
+
+### 구현
+
+```js
+function mergeSort(arr) {
+  function sort(arr) {
+    if (arr.length <= 1) return arr;
+
+    const mid = Math.floor(arr.length / 2);
+    const leftArr = sort(arr.slice(0, mid));
+    const rightArr = sort(arr.slice(mid, arr.length));
+
+    return merge(leftArr, rightArr);
+  }
+
+  function merge(leftArr, rightArr) {
+    const mergedArr = [];
+    let left = 0,
+      right = 0;
+
+    while(left < leftArr.length && right < rightArr.length) {
+      if(leftArr[left] < rightArr[right]) {
+        mergedArr.push(leftArr[left]);
+        left++;
+      }
+      else {
+        mergedArr.push(rightArr[right]);
+        right++;
+      }
+    }
+
+    return mergedArr.concat(leftArr.slice(left),rightArr.slice(right));
+  }
+
+  return sort(arr);
+}
+```
