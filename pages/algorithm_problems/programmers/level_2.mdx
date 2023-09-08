@@ -417,3 +417,197 @@ function solution(book_time) {
     return answer;
 }
 ```
+
+## 무인도 여행
+
+https://school.programmers.co.kr/learn/courses/30/lessons/154540
+
+```js
+function solution(maps) {
+    var answer = [];
+    
+    maps = maps.map((m) => m.split(''));
+    
+    const stack = [];
+    const directions = [[-1,0],[1,0],[0,-1],[0,1]];
+    
+    for(let i=0;i<maps.length;i++) {
+        for(let j=0;j<maps[i].length;j++) {
+            if(maps[i][j] === 'X') continue;
+            
+            let sum = 0;
+            stack.push([i,j,maps[i][j]]);
+            while(stack.length) {
+                const [row,col,m] = stack.pop();
+                sum += Number(m);
+                maps[row][col] = 'X';
+                
+                for(direction of directions) {
+                    const movedRow = row+direction[0];
+                    const movedCol = col+direction[1];
+                    
+                    if(movedRow < 0 || movedRow >= maps.length) continue;
+                    if(movedCol < 0 || movedCol >= maps[i].length) continue;
+                    if(maps[movedRow][movedCol] === 'X') continue;
+                    
+                    stack.push([movedRow,movedCol,maps[movedRow][movedCol]]);
+                    maps[movedRow][movedCol] = 'X'
+                }
+            }
+            answer.push(sum);
+        }
+    }
+    
+    if(answer.length) answer.sort((a,b) => a-b);
+    else answer.push(-1);
+    
+    return answer;
+}
+```
+
+## 뒤에 있는 큰 수 찾기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/154539
+
+```js
+function solution(numbers) {
+    var answer = [];
+    
+    const stack = [];
+    
+    for(let i=0;i<numbers.length;i++) {
+        
+        while(stack.length && stack[stack.length-1][1] < numbers[i]) {
+            const [index] = stack.pop();
+            answer[index] = numbers[i];
+        }
+        
+        stack.push([i,numbers[i]]);
+    }
+    
+    while(stack.length) {
+        const [index] = stack.pop();
+        answer[index] = -1;
+    }
+    
+    return answer;
+}
+```
+
+## 숫자 변환하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/154538
+
+```js
+function solution(x, y, n) {
+    var answer = 0;
+    
+    if(x === y) return 0;
+    
+    const table = {}
+    const queue = [];
+    let index = 0;
+    
+    queue.push([x,0])
+        
+    while(queue[index]) {
+        let [num,count] = queue[index++];
+        
+        if(table[num] || num > y) continue;
+        
+        count += 1;
+        
+        const first = num+n;
+        const second = num*2;
+        const third = num*3;
+        
+        if(first === y || second === y || third === y) return count;
+        
+        table[num] = true;
+        
+        queue.push([first,count]);
+        queue.push([second,count]);
+        queue.push([third,count]);
+    }
+    
+    answer = -1;
+    
+    return answer;
+}
+```
+
+## 시소 짝꿍
+
+https://school.programmers.co.kr/learn/courses/30/lessons/152996
+
+```js
+function solution(weights) {
+    var answer = 0;
+    
+    const table = {};
+    const ratios = [3/4,4/3,2/3,3/2,1/2,2];
+    
+    for(weight of weights) {
+        if(table[weight]) {
+            answer += table[weight];
+            table[weight]++;
+        }
+        else table[weight] = 1;
+        
+        for(ratio of ratios) {
+            const number = weight * ratio;
+            if(Number.isInteger(number) && table[number]) answer += table[number];
+        }    
+    }
+    
+    return answer;
+}
+```
+
+## 택배 배달과 수거하기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/150369
+
+```js
+function solution(cap, n, deliveries, pickups) {
+    var answer = 0;
+    
+    let left = deliveries.length-1, right = pickups.length-1;
+    while(left >= 0 || right >= 0) {
+        let dBox = cap;
+        let pBox = cap;
+        
+        while(!deliveries[left] && left >= 0) left--;
+        while(!pickups[right] && right >= 0) right--;
+        
+        if(left >= right) answer += 2*(left+1);
+        else answer += 2*(right+1);
+        
+        while(dBox > 0 && left >= 0) {
+            if(deliveries[left] >= dBox) {
+                deliveries[left] -= dBox;
+                dBox = 0;
+            }
+            else {
+                dBox -= deliveries[left];
+                deliveries[left] = 0;
+                left--;
+            }
+        }
+        
+        while(pBox > 0 && right >= 0) {
+            if(pickups[right] >= pBox) {
+                pickups[right] -= pBox;
+                pBox = 0;
+            }
+            else {
+                pBox -= pickups[right];
+                pickups[right] = 0;
+                right--;
+            }
+        }
+    }
+    
+    return answer;
+}
+```
