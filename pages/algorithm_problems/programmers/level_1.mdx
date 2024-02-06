@@ -3,6 +3,88 @@
 Lv.1 문제 모아보기:
 https://school.programmers.co.kr/learn/challenges?order=recent&levels=1&page=1&languages=javascript
 
+## 가장 많이 받은 선물
+
+https://school.programmers.co.kr/learn/courses/30/lessons/258712
+
+```js
+function solution(friends, gifts) {
+    var answer = 0;
+    
+    const table = {};
+    
+    for(friend of friends) {
+        table[friend] = {score:0};
+    }
+        
+    for(gift of gifts) {
+        const [giver,taker] = gift.split(' ');
+        table[giver].score++;
+        table[taker].score--;
+        
+        if(table[giver][taker]) table[giver][taker]++;
+        else table[giver][taker] = 1;
+    }
+    
+    for(let i=0;i<friends.length;i++) {
+        let count = 0;
+        
+        for(let j=0;j<friends.length;j++) {
+            if(i===j) continue;
+            const gives = table[friends[i]][friends[j]];
+            const takes = table[friends[j]][friends[i]];
+            const giver_score = table[friends[i]].score;
+            const taker_score = table[friends[j]].score;
+            
+            if(gives) {
+                if(takes) {
+                    if(gives > takes) count++;
+                    else if(gives === takes) {
+                        if(giver_score > taker_score) count++;
+                    }
+                }
+                else count++;
+            }
+            else if(!takes) {
+                if(giver_score > taker_score) count++;
+            }
+        }
+        
+        if(count > answer) answer = count;
+    }
+    
+    return answer;
+}
+```
+
+## [PCCP 기출문제] 1번 / 붕대 감기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/250137
+
+```js
+function solution(bandage, health, attacks) {
+    var answer = 0;
+    
+    let current_health = health;
+    let prev_t = 0;
+    for(const attack of attacks) {
+        const [t,damage] = attack;
+
+        const heal = (t-prev_t-1)*bandage[1];
+        current_health += Math.floor((t-prev_t-1)/bandage[0])*bandage[2];
+        current_health += heal;
+        if(current_health > health) current_health = health;
+        
+        current_health -= damage;
+        if(current_health <= 0) return -1;
+
+        prev_t = t;
+    }
+    answer = current_health;
+    return answer;
+}
+```
+
 ## 달리기 경주
 
 https://school.programmers.co.kr/learn/courses/30/lessons/178871
