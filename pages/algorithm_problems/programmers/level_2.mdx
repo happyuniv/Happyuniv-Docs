@@ -796,3 +796,149 @@ function solution(n, k, enemy) {
     return answer;
 }
 ```
+
+## 점 찍기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/140107
+
+```js
+function solution(k, d) {
+    var answer = 0;
+    
+    for(let i=0;i*k<=d;i++) {
+        answer++;
+        answer += Math.floor(Math.floor(Math.sqrt(d**2-(i*k)**2))/k);
+    }
+    
+    return answer;
+}
+```
+
+## 귤 고르기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/138476
+
+```js
+function solution(k, tangerine) {
+    var answer = 0;
+    
+    let table = Array(10000001).fill(0);
+    
+    for(t of tangerine) table[t]++;
+    
+    table.sort((a,b) => b-a);
+    
+    for(let i=0;k>0;i++) {
+        k -= table[i];
+        answer++;
+    }
+    
+    return answer;
+}
+```
+
+## 숫자 카드 나누기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/135807
+
+```js
+function solution(arrayA, arrayB) {
+    var answer = 0;
+    
+    arrayA.sort((a,b) => b-a);
+    arrayB.sort((a,b) => b-a);
+    let maxDiv = 0;
+    
+    for(let i=arrayA[0];i>0;i--) {
+        if(arrayA.every((num) => num%i === 0) && !arrayB.some((num) => num%i === 0)) {
+            maxDiv = i;
+            break;
+        }
+    }
+    for(let i=arrayB[0];i>0;i--) {
+        if(arrayB.every((num) => num%i === 0) && !arrayA.some((num) => num%i === 0)) {
+            if(i>maxDiv) {
+                maxDiv = i;
+                break;
+            }
+            else break;
+        }
+    }
+    
+    answer = maxDiv;
+    
+    return answer;
+}
+```
+
+## 우박수열 정적분
+
+https://school.programmers.co.kr/learn/courses/30/lessons/134239
+
+```js
+function solution(k, ranges) {
+    var answer = [];
+    
+    const arr = [];
+    let prev = k;
+    
+    for(let i=0;k>1;i++) {
+        if(k%2 === 0) k = k/2;
+        else k = k*3+1;
+        
+        const area = (prev+k)/2;
+        prev = k;
+        arr.push(area);
+    }
+        
+    for(range of ranges) {
+        const [start,end] = [range[0],arr.length+range[1]];
+        
+        let sum = 0;
+        if(start > end) answer.push(-1);
+        else {
+            for(let i=start;i<end;i++) {
+                sum += arr[i];
+            }
+            answer.push(sum);
+        }
+    }
+    
+    return answer;
+}
+```
+
+## 롤케이크 자르기
+
+https://school.programmers.co.kr/learn/courses/30/lessons/132265
+
+```js
+function solution(topping) {
+    var answer = 0;
+    
+    const arr = [];
+    let table = {};
+    let count = 0;
+    
+    for(let i=0;i<topping.length;i++) {
+        if(table[topping[i]]) arr.push(count);
+        else {
+            table[topping[i]] = true;
+            count++;
+            arr.push(count);
+        }
+    }
+    
+    table = {};
+    count = 0;
+    for(let i=topping.length-1;i>0;i--) {
+        if(!table[topping[i]]) {
+            table[topping[i]] = true;
+            count++;
+        }
+        
+        if(count === arr[i-1]) answer++;
+    }
+    
+    return answer;
+}
